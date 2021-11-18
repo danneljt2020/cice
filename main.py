@@ -17,7 +17,7 @@ with open("municipios.csv", mode="r", encoding="utf8") as file:
     data = list(csv.reader(file, delimiter=";"))
     del data[0]
     user = "r"
-    menu = ['1', '2', '3', '4', '5', '6', '7', 'Q', 'q']
+    menu = ['1', '2', '3', '4', '5', '6', '7', '8', 'Q', 'q']
 
     while user.lower() != "q":
         print("Bienvenido Municipios Madrid".center(50, "-"))
@@ -28,6 +28,7 @@ with open("municipios.csv", mode="r", encoding="utf8") as file:
         print("5. Obtener la población de Madrid")
         print("6. Obtener la población media de los municipios")
         print("7. Todos")
+        print("8. LEY")
         print("Presione la letra Q para salir")
         option_menu = input(":")
 
@@ -66,6 +67,14 @@ with open("municipios.csv", mode="r", encoding="utf8") as file:
                 print("La poblacion media de Madrid es:")
                 print("")
                 print(getPoblacionMedia(data), 'personas')
+
+            elif option_menu == "8":
+                print("LEY:")
+                print("")
+                density = [mun[-1] for mun in data]
+                result = verifyLeyBendford(density)
+                for row in result:
+                    print(row)
 
             elif option_menu == "q":
                 print("Hasta la Proxima!!!".center(40, "-"))
