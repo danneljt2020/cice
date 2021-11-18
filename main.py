@@ -28,7 +28,7 @@ with open("municipios.csv", mode="r", encoding="utf8") as file:
         print("5. Obtener la población de Madrid")
         print("6. Obtener la población media de los municipios")
         print("7. Todos")
-        print("8. LEY")
+        print("8. LEY BENDFORD")
         print("Presione la letra Q para salir")
         option_menu = input(":")
 
