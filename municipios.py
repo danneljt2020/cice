@@ -49,23 +49,24 @@ def getPoblacionMadrid(data):
 def getPoblacionMedia(data):
     return getPoblacionMadrid(data) / len(data)
 
+
 # Ley de bendford
 def verifyLeyBendford(data):
     # data = [11, 87,33,112,5,112,1186]
     results = []
 
-    first_digits = list(map(lambda n: str(n)[0], data))  #get all frist digits
-    first_digit_freq = collections.Counter(first_digits) #count key value
-    #print(first_digit_freq)
+    first_all_digits = list(map(lambda n: str(n)[0], data))  # get all frist digits
+    first_digit_freq = collections.Counter(first_all_digits)  # count key value
+    # print(first_digit_freq)
 
-#TODO complete
+    # TODO complete
 
     for n in range(1, 10):
         frequency = first_digit_freq[str(n)]
-        frequency_percent = frequency / len(data) #percent
+        frequency_percent = frequency / len(data)  # percent
         results.append({"NUMERO": n,
                         "Aparece": round(frequency, 3),
                         "Porciento": round(frequency_percent, 3),
-        })
+                        })
 
     return results
