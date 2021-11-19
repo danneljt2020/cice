@@ -1,9 +1,13 @@
-import requests as req
-import json
+from consumer_api import *
 
-url = 'https://www.metaweather.com/api/location/search/?query=mad'
-response = req.get(url)
-data = response.json()
+
+def print_weather(city_weathers):
+    print("Estado:", city_weathers['weather_state_name'])
+    print("máxima:", city_weathers['max_temp'])
+    print("Sensación térmica:", city_weathers['the_temp'])
+    print("Humedad:", city_weathers['humidity'])
+    print("Velocidad del viento y dirección:", city_weathers['wind_direction'])
+
 
 user = "r"
 menu = ['1', '2', '3', 'Q', 'q']
@@ -20,19 +24,26 @@ while user.lower() != "q":
         if option_menu == "1":
             print("Introduzca la ciudad".center(50, "-"))
             ciudad = input("Ciudad:")
-            print(ciudad)
+            city_weathers = find_weather_by_city(ciudad)
+            print(print_weather(city_weathers))
 
         if option_menu == "2":
             print("Introduzca las coordenadas (latitud y longitud)".center(50, "-"))
-            lat = input("latitud:")
+            latt = input("latitud:")
             long = input("longitud:")
+            print(find_weather_by_coodenadas(latt, long))
 
         if option_menu == "2":
-            print("Por que desea buscar".center(50, "-"))
-            print("2. Buscar por coordenadas (latitud y longitud)")
-            print("3. Buscar por ciudad en una determinada fecha")
-            city_coordenada = input("latitud:")
-
+            print("Por que desea buscar: ".center(50, "-"))
+            print("1. Buscar por coordenadas (latitud y longitud)")
+            print("2. Buscar por ciudad")
+            opt_menu = input(":")
+            if opt_menu == "1":
+                pass
+            elif opt_menu == "2":
+                pass
+            else:
+                print("Opcion no valida")
 
         elif option_menu == "q":
             print("Hasta la Proxima!!!".center(40, "-"))
