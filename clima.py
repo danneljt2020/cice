@@ -36,7 +36,8 @@ while user.lower() != "q":
             print("Introduzca las coordenadas (latitud y longitud)".center(50, "-"))
             latt = input("latitud:")
             long = input("longitud:")
-            print(find_weather_by_coodenadas(latt, long))
+            city_weathers = find_weather_by_coodenadas(latt, long)
+            print_weather(city_weathers[0]['consolidated_weather'].pop())
 
         if option_menu == "2":
             print("Por que desea buscar: ".center(50, "-"))

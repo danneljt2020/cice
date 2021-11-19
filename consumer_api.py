@@ -13,12 +13,26 @@ def find_weather_by_city(city):
     return cities_weather
 
 
+# find weather by city and date
+def find_weather_by_date_city(city, date):
+
+    city_url = base_url + "search/?query=" + city
+    response = req.get(city_url)
+
+    data = response.json()
+    list_woeid = get_woeid(data)
+    cities_weather = get_weather(list_woeid)
+    return cities_weather
+
+
 # find weather by coodenadas
 def find_weather_by_coodenadas(lat, lon):
     lat_lon_url = 'search/?lattlong=' + lat + ',' + lon
     response = req.get(base_url + lat_lon_url)
     data = response.json()
-    return data
+    list_woeid = get_woeid(data)
+    cities_weather = get_weather(list_woeid)
+    return cities_weather
 
 
 # get weather from list_woeid
