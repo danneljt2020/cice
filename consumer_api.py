@@ -5,7 +5,7 @@ base_url = 'https://www.metaweather.com/api/location/'
 
 # find weather by city
 def find_weather_by_city(city, **kwargs):
-    date_user =kwargs.get('date_user')
+    date_user = kwargs.get('date_user')
 
     city_url = base_url + "search/?query=" + city
     response = req.get(city_url)
@@ -39,11 +39,11 @@ def find_weather_by_coodenadas(lat, lon, **kwargs):
 # get weather from list_woeid
 def get_weather(list_woeid, **kwargs):
     list_weather = []
-    date_user =kwargs.get('date_user')
+    date_user = kwargs.get('date_user')
     for i, woeid in enumerate(list_woeid):
         response = req.get(base_url + str(woeid))
         if date_user:
-            response = req.get(base_url + str(woeid)+'/'+date_user+'/')  #if search by date
+            response = req.get(base_url + str(woeid) + '/' + date_user + '/')  # if search by date
         list_weather.append(response.json())
     return list_weather
 
