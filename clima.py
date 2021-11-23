@@ -33,6 +33,7 @@ while user.lower() != "q":
             print("Introduzca la ciudad".center(50, "-"))
             ciudad = input("Ciudad:")
             city_weathers = find_weather_by_city(ciudad)
+
             try:
                 cities = city_weathers[0]['consolidated_weather'].pop()
             except IndexError:
@@ -46,7 +47,14 @@ while user.lower() != "q":
             latt = input("latitud:")
             long = input("longitud:")
             city_weathers = find_weather_by_coodenadas(latt, long)
-            print_weather(city_weathers[0]['consolidated_weather'].pop())
+
+            try:
+                cities_coords = city_weathers[0]['consolidated_weather'].pop()
+            except IndexError:
+                cities_coords = None
+                print("Ups Algo ha salido mal")
+            if cities_coords:
+                print_weather(cities_coords)
 
         if option_menu == "3":
             print("Introsuzca la fecha en formato 2021/11/22: ".center(50, "-"))
@@ -65,7 +73,14 @@ while user.lower() != "q":
                 print("Introduzca la ciudad".center(50, "-"))
                 city_d = input("Ciudad:")
                 city_weathers_d = find_weather_by_city(city_d, date_user=date_user)
-                print_weather(city_weathers_d[0].pop(), date_user=date_user)
+
+                try:
+                    cities_date = city_weathers_d[0].pop()
+                except IndexError:
+                    cities_date = None
+                    print("Ups Algo ha salido mal")
+                if cities_date:
+                    print_weather(cities_date, date_user=date_user)
             else:
                 print("Opcion no valida!")
 
