@@ -1,16 +1,48 @@
+import requests
 import requests as req
+import json
+import time
+
+start = time.perf_counter()
+finish = time.perf_counter()
+# print(finish - start)
 
 base_url = 'https://www.metaweather.com/api/location/'
 
 
+# try:
+# except requests.exceptions.RequestException as e:
+#     raise SystemExit(e)
+
+
+def get_data(json_file):
+    with open(json_file, encoding="utf8") as file:
+        return json.load(file)
+
+
+# woeid[location]=54458787 woeid
+def write_data(json_file, data_json):
+    with open(json_file, mode="w", encoding="utf8") as file:
+        json.dump(data_json, file, ensure_ascii=False, indent=4)
+
+
 # find weather by city
 def find_weather_by_city(city, **kwargs):
+    woeids = get_data("woeids.json")
     date_user = kwargs.get('date_user')
-
     city_url = base_url + "search/?query=" + city
-    response = req.get(city_url)
-    data = response.json()
-    list_woeid = get_woeid(data)
+
+    if not woeids.get(city.lower()):
+        try:
+            response = req.get(city_url)
+            data = response.json()
+        except requests.exceptions.RequestException as e:
+            raise SystemExit(e)
+        list_woeid = get_woeid(data)
+        woeids[city] = list_woeid
+        write_data("woeids.json", woeids)
+    else:
+        list_woeid = woeids.get(city.lower())
 
     if date_user:
         cities_weather = get_weather(list_woeid, date_user=date_user)
@@ -24,8 +56,12 @@ def find_weather_by_city(city, **kwargs):
 def find_weather_by_coodenadas(lat, lon, **kwargs):
     date_user = kwargs.get('date_user')
     lat_lon_url = 'search/?lattlong=' + lat + ',' + lon
-    response = req.get(base_url + lat_lon_url)
-    data = response.json()
+    try:
+        response = req.get(base_url + lat_lon_url)
+        data = response.json()
+    except requests.exceptions.RequestException as e:
+        raise SystemExit(e)
+
     list_woeid = get_woeid(data)
 
     if date_user:
@@ -41,9 +77,15 @@ def get_weather(list_woeid, **kwargs):
     list_weather = []
     date_user = kwargs.get('date_user')
     for i, woeid in enumerate(list_woeid):
-        response = req.get(base_url + str(woeid))
+        try:
+            response = req.get(base_url + str(woeid))
+        except requests.exceptions.RequestException as e:
+            raise SystemExit(e)
         if date_user:
-            response = req.get(base_url + str(woeid) + '/' + date_user + '/')  # if search by date
+            try:
+                response = req.get(base_url + str(woeid) + '/' + date_user + '/')  # if search by date
+            except requests.exceptions.RequestException as e:
+                raise SystemExit(e)
         list_weather.append(response.json())
     return list_weather
 

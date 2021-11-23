@@ -5,11 +5,10 @@ today = date.today()
 
 
 def print_weather(city_weathers, **kwargs):
-    date_str = today
     date_user = kwargs.get('date_user')
     if date_user:
         date_str = date_user
-    print("Clima para el dia" + date_str.center(50, "-"))
+    print("Clima para el dia".center(50, "-"))
     print("Estado:", city_weathers['weather_state_name'])
     print("Máxima:", city_weathers['max_temp'])
     print("Sensación térmica:", city_weathers['the_temp'])
@@ -34,7 +33,13 @@ while user.lower() != "q":
             print("Introduzca la ciudad".center(50, "-"))
             ciudad = input("Ciudad:")
             city_weathers = find_weather_by_city(ciudad)
-            print_weather(city_weathers[0]['consolidated_weather'].pop())
+            try:
+                cities = city_weathers[0]['consolidated_weather'].pop()
+            except IndexError:
+                cities = None
+                print("Ups Algo ha salido mal")
+            if cities:
+                print_weather(cities)
 
         if option_menu == "2":
             print("Introduzca las coordenadas (latitud y longitud)".center(50, "-"))
