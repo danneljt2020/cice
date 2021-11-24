@@ -1,8 +1,8 @@
-import requests
 import requests as req
 import json
 import time
 
+# know the execution time
 start = time.perf_counter()
 finish = time.perf_counter()
 # print(finish - start)
@@ -14,13 +14,13 @@ base_url = 'https://www.metaweather.com/api/location/'
 # except requests.exceptions.RequestException as e:
 #     raise SystemExit(e)
 
-
+# read the json file
 def get_data(json_file):
     with open(json_file, encoding="utf8") as file:
         return json.load(file)
 
 
-# woeid[location]=54458787 woeid
+# write the json file
 def write_data(json_file, data_json):
     with open(json_file, mode="w", encoding="utf8") as file:
         json.dump(data_json, file, ensure_ascii=False, indent=4)
@@ -36,7 +36,7 @@ def find_weather_by_city(city, **kwargs):
         try:
             response = req.get(city_url)
             data = response.json()
-        except requests.exceptions.RequestException as e:
+        except req.exceptions.RequestException as e:
             raise SystemExit(e)
         list_woeid = get_woeid(data)
         woeids[city] = list_woeid
@@ -61,10 +61,11 @@ def find_weather_by_coodenadas(lat, lon, **kwargs):
     try:
         response = req.get(base_url + lat_lon_url)
         data = response.json()
-    except requests.exceptions.RequestException as e:
+    except req.exceptions.RequestException as e:
         raise SystemExit(e)
 
     list_woeid = get_woeid(data)
+    save_woeid_from_search_lattlong(data)
 
     if date_user:
         cities_weather = get_weather(list_woeid, date_user=date_user)
@@ -81,12 +82,12 @@ def get_weather(list_woeid, **kwargs):
     for i, woeid in enumerate(list_woeid):
         try:
             response = req.get(base_url + str(woeid))
-        except requests.exceptions.RequestException as e:
+        except req.exceptions.RequestException as e:
             raise SystemExit(e)
         if date_user:
             try:
                 response = req.get(base_url + str(woeid) + '/' + date_user + '/')  # if search by date
-            except requests.exceptions.RequestException as e:
+            except req.exceptions.RequestException as e:
                 raise SystemExit(e)
         list_weather.append(response.json())
     return list_weather
@@ -98,3 +99,12 @@ def get_woeid(data):
     for i, k in enumerate(data):
         woeid.append(k['woeid'])
     return woeid
+
+
+# save woeids in json file from coords search
+def save_woeid_from_search_lattlong(data):
+    woeids = get_data("woeids.json")
+    for i, k in enumerate(data):
+        woeids[k['title'].lower()] = [k['woeid']]
+    write_data("woeids.json", woeids)
+
