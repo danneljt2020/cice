@@ -18,13 +18,14 @@ def print_weather(city_weathers, **kwargs):
 
 
 user = "r"
-menu = ['1', '2', '3', 'Q', 'q']
+menu = ['1', '2', '3', '4', 'Q', 'q']
 
 while user.lower() != "q":
     print("Bienvenido Clima MAX".center(50, "-"))
     print("1. Buscar por ciudad")
     print("2. Buscar por coordenadas (latitud y longitud)")
     print("3. Buscar por ciudad/coordenadas en una determinada fecha")
+    print("4. Planificar Viaje")
     print("Presione la letra Q para salir")
     option_menu = input(":")
 
@@ -84,8 +85,29 @@ while user.lower() != "q":
             else:
                 print("Opcion no valida!")
 
+        if option_menu == "4":
+            print("Introduzca las ciudades".center(50, "-"))
+            city_origin = input("Ciudad Origen:")
+            city_destiny = input("Ciudad Destino:")
+            print(distance_between_city(city_origin, city_destiny))
+
         elif option_menu == "q":
             print("Hasta la Proxima!!!".center(40, "-"))
             break
     else:
         print("Ha seleccionado una Opcion no valida! USE ESPEJUELOS")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
