@@ -40,7 +40,9 @@ def find_weather_by_city(city, **kwargs):
             raise SystemExit(e)
         list_woeid = get_woeid(data)
         woeids[city] = list_woeid
-        write_data("woeids.json", woeids)
+        # validate if find woeid to write in json file
+        if len(list_woeid) > 0:
+            write_data("woeids.json", woeids)
     else:
         list_woeid = woeids.get(city.lower())
 
