@@ -3,6 +3,7 @@
     "capital": "havana",
     "population": 1111,
     "superficie": 200,
-    "lang": "spanish"
+    "lang": "spanish",
+    "flag": "https://flagcdn.com/cu.svg"
   }
 }

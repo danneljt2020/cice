@@ -1,4 +1,5 @@
 import requests as req
+import random
 import json
 
 base_url = 'https://restcountries.com/v2/'
@@ -39,7 +40,7 @@ def find_by_country(country, download=None):
 def download_flag(country, endpoint):
     response = req.get(endpoint)
 
-    file = open("flags/", "wb")
+    file = open("flags/flag_" + country + ".svg", "wb")
     file.write(response.content)
     file.close()
 
@@ -51,5 +52,37 @@ def get_country_data(data):
     data_result["population"] = data[0]['population']
     data_result["superficie"] = data[0]['area']
     data_result["lang"] = data[0]['languages'][0]['nativeName']
-    data_result["flag"] = data[0]['flags']['svg']
+    data_result["flag"] = data[0]['flag']
+    data_result["region"] = data[0]['region']
+    data_result["calling_code"] = data[0]['callingCodes']  # list of codes
     return data_result
+
+
+# get random country for ask
+def get_random_country():
+    all_countrys = get_data("all_country.json")
+    list_country = all_countrys['countrys']
+    return random.choice(list_country)
+
+
+def verify_answer(country, key_answer, resp):
+    flag = False
+    data_country = find_by_country(country)
+
+    if key_answer == "calling_code":  #list of codes
+        if resp in data_country[key_answer]:
+            flag = True
+
+    if data_country[key_answer] == resp:
+        flag = True
+
+    return flag
+
+# response = req.get("https://restcountries.com/v2/all")
+# data_response = response.json()
+# list_all_countrys = {'countrys': []}
+# list = []
+# for d in data_response:
+#     list.append(d['name'])
+# list_all_countrys['countrys'] = list
+# write_data("all_country.json", list_all_countrys)
