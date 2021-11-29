@@ -13,6 +13,9 @@ def print_answer():
         'superficie': "Cual es la superficie de: ",
         'region': "A que region pertenece el pais: ",
         'calling_code': "Cual es el codigo telefonico para llamar al pais: ",
+        'europe': "Diga un pais perteneciente al continente Europeo: ",
+        'asia': "Diga un pais perteneciente al continente Asiatico: ",
+        'africa': "Diga un pais perteneciente al continente Africano: ",
     }
 
     return random.choice(list(answers.items()))
@@ -51,7 +54,12 @@ while user.lower() != "q":
             answer = print_answer()
             key_answer = answer[0]
             country = get_random_country()
-            print(answer[1]+" "+country)
+
+            if key_answer not in ['europe', 'africa', 'asia']:
+                print(answer[1]+" "+country)
+            else:
+                print(answer[1] + " ")
+
             resp = input(":")
             verify = verify_answer(country, key_answer, resp)
             response = "Respuesta Correcto" if verify else "Respuesta Incorrecto"

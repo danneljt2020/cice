@@ -119,7 +119,7 @@ def distance_between_city(city_origin, city_destiny):
         data = response.json()
     except req.exceptions.RequestException as e:
         raise SystemExit(e)
-    origin_location_coords = get_coords_woeid(data)["latt_long"]#todo verificar
+    origin_location_coords = get_coords_woeid(data)["latt_long"]#todo verificar so esta la Ciudad y devolver la distancia
 
     # validate if find woeid to write in json file
     if not woeids.get(city_origin.lower()):

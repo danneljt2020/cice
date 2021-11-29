@@ -37,6 +37,7 @@ def find_by_country(country, download=None):
     return country_data_result
 
 
+# Download flag country
 def download_flag(country, endpoint):
     response = req.get(endpoint)
 
@@ -69,14 +70,55 @@ def verify_answer(country, key_answer, resp):
     flag = False
     data_country = find_by_country(country)
 
-    if key_answer == "calling_code":  #list of codes
-        if resp in data_country[key_answer]:
+    if key_answer not in ['europe', 'africa', 'asia']:
+        if key_answer == "calling_code":  #list of codes
+            if resp in data_country[key_answer]:
+                flag = True
+
+        if data_country[key_answer] == resp:
             flag = True
 
-    if data_country[key_answer] == resp:
-        flag = True
+    if key_answer == "europe":
+        country_europe = get_country_by_continent("europe")
+        if resp.lower() in country_europe:
+            flag = True
+
+    if key_answer == "asia":
+        country_asia = get_country_by_continent("asia")
+        if resp.lower() in country_asia:
+            flag = True
+
+    if key_answer == "africa":
+        country_africa = get_country_by_continent("africa")
+        if resp.lower() in country_africa:
+            flag = True
 
     return flag
+
+
+# get all country data from contiennt
+def get_country_data_continent(data):
+    data_result = []
+    for country in data:
+        data_result.append(country['name'].lower())
+    return data_result
+
+
+# get all countrys  by contiennt json
+def get_country_by_continent(continent):
+    url_cont = "https://restcountries.com/v2/region/"+continent
+    try:
+        response = req.get(url_cont)
+        data_response = response.json()
+        country_data_result = get_country_data_continent(data_response)
+    except req.exceptions.RequestException as e:
+        raise SystemExit(e)
+
+    return country_data_result
+
+
+
+# print(get_country_by_continent("europe"))
 
 # response = req.get("https://restcountries.com/v2/all")
 # data_response = response.json()
