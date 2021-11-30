@@ -4,6 +4,7 @@ import json
 
 base_url = 'https://restcountries.com/v2/'
 
+# TODO update ex
 
 # read the json file
 def get_data(json_file):
@@ -71,7 +72,7 @@ def verify_answer(country, key_answer, resp):
     data_country = find_by_country(country)
 
     if key_answer not in ['europe', 'africa', 'asia']:
-        if key_answer == "calling_code":  #list of codes
+        if key_answer == "calling_code":  # list of codes
             if resp in data_country[key_answer]:
                 flag = True
 
