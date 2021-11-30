@@ -2,6 +2,7 @@ from country_api import *
 
 user = "r"
 menu = ['1', '2', '3', '4', 'Q', 'q']
+continents = ['europe', 'africa', 'asia', 'americas']
 
 
 # get one answer random
@@ -19,6 +20,49 @@ def print_answer():
     }
 
     return random.choice(list(answers.items()))
+
+
+# get the answers to quiz
+def make_answers(continent):
+    list_answers = []
+
+    answer = {
+        'question': "Diga el pais que pertenece",
+        'choices': ['cuba', 'espana', 'peru'],
+        'resp': '1',
+        'user': '',
+        'type': 'k_country'
+    }
+
+    answers1 = {
+        'question': "Pais mas poblado del continente",
+        'choices': ['rusia', 'japon', 'china'],
+        'resp': '1',
+        'user': '',
+        'type': 'k_country'
+    }
+
+    answers2 = {
+        'question': "Pais con menos poblacion del continente",
+        'choices': ['rusia', 'japon', 'china'],
+        'resp': '1',
+        'user': '',
+        'type': 'k_country'
+    }
+
+    answers3 = {
+        'question': "Cual es la poblacion del pais:",
+        'choices': ['3222', '58889', '45'],
+        'resp': '1',
+        'user': '',
+        'type': 'k_country'
+    }
+    list_answers.append(answer)
+    list_answers.append(answers1)
+    list_answers.append(answers2)
+    list_answers.append(answers3)
+
+    return list_answers
 
 
 # get normalize data from request
@@ -51,19 +95,16 @@ while user.lower() != "q":
             find_by_country(flag_pais, True)
 
         if option_menu == "3":
-            answer = print_answer()
-            key_answer = answer[0]
-            country = get_random_country()
-
-            if key_answer not in ['europe', 'africa', 'asia']:
-                print(answer[1]+" "+country)
-            else:
-                print(answer[1] + " ")
-
-            resp = input(":")
-            verify = verify_answer(country, key_answer, resp)
-            response = "Respuesta Correcto" if verify else "Respuesta Incorrecto"
-            print(response)
+            print("introduzca en que continente desea jugar!")
+            continent = input("Contienente:")
+            answers = make_answers(continent)
+            random.shuffle(answers)
+            for k, a in enumerate(answers):
+                print(a['question'])
+                for i, choice in enumerate(a['choices']):
+                    print(str(i + 1) + "-" + choice)
+                resp_user = input("respuesta:")
+                print("".center(50, "-"))
 
         elif option_menu == "q":
             print("Hasta la Proxima!!!".center(40, "-"))
