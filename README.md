@@ -1,20 +1,19 @@
-# Master Python CICE
+### Pokemon
 
-### Aplicación del clima
+ * https://pokeapi.co/ 
+ * types: fire, grass, water
 
-1. Crear una aplicación de terminal con la ayuda de la API: https://www.metaweather.com/
-2. La aplicación tendrá el siguiente menú:
-* Buscar por ciudad
-* Buscar por coordenadas (latitud y longitud)
-* Buscar por ciudad/coordenadas en una determinada fecha
+ 1. Crear la clase Pokemon con los siguientes atributos y métodos
+	* name
+	* type
+	* HP
+	* attacks []
+	* Métodos: learn_attack, attack, receive_damage
 
-#### Y debera entregar lo siguiente de cada búsqueda:
 
-* La descripción del clima (soleado, nuboso y lluvioso)
-* La máxima
-* La mínima
-* Sensación térmica
-* Humedad
-* Velocidad del viento y dirección
+ 2. Crear clase Attack con los siguientes atributos
+	 * name
+	 * type
+	 * damage
 
-#### Al presionar Enter se le mostrará al usuario el pronóstico para el siguiente día máximo 3 días
+ 3. Crear un pequeño menú que permita simular una batalla pokemon
