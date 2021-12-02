@@ -1,5 +1,9 @@
 class Pokemon:
     types = ['fire', 'grass', 'water']
+    counter = 0
+    exp_rate = 1
+    win = 0
+    lose = 0
 
     def __init__(self, name, type_p, hp):
         if type_p not in self.types:
@@ -8,25 +12,45 @@ class Pokemon:
         self.name = name
         self.hp = hp
         self.attacks = []
+        Pokemon.counter += 1
 
-    def learn_attack(self, attack):
-        self.attacks.append(attack)
+    @classmethod
+    def set_exp_rate(cls, exp_rate):
+        cls.exp_rate = exp_rate
 
-    def attack(self, type_attack):
-        return self.attacks[type_attack]
+    @classmethod
+    def win_lose(cls, key):
+        if key == 'win':
+            cls.win += 1
+        if key == 'lose':
+            cls.lose += 1
 
-    def receive_damage(self, damage):
-        self.hp = float(self.hp)-float(damage)
+    def get_hp(self):
         return self.hp
 
-    def add_attacks(self, attack):
-        self.attacks.append(attack)
+    def learn_attack(self, attack):
+        if attack not in self.attacks:
+            self.attacks.append(attack)
+
+    def attack(self, type_attack):
+        attack = None
+        for a in self.attacks:
+            if a.type_a == type_attack.lower():
+                attack = a
+        return attack
+
+    def receive_damage(self, attack):
+        remaing_hp = float(self.hp) - float(attack.damage)
+        self.hp = remaing_hp if float(remaing_hp) > 0 else 0
+        return self.hp
 
     def __repr__(self):
-        return "name:% s type_p:% s hp:% s attacks:% s" % (self.name, self.type_p,  self.hp, self.attacks)
+        return "name:% s type_p:% s hp:% s win:%s lose:%s attacks:% s " % (
+            self.name, self.type_p, self.hp, self.win, self.lose, self.attacks)
 
     def __str__(self):
-        return "Hi i am pokemon: named %s type %s life points %s" % (self.name, self.type_p, self.hp)
+        return "Pokemon: named %s type %s life points %s WIN : %s LOSE: %s" % (
+            self.name, self.type_p, self.hp, self.win, self.lose)
 
 
 class Attack:
@@ -35,9 +59,19 @@ class Attack:
         self.type_a = type_a
         self.damage = damage
 
+    def get_damage(self):
+        return self.damage
+
+    def get_type_a(self):
+        return self.type_a
+
     def __repr__(self):
-        return "name:% s type_a:% s damage:% s" % (self.name, self.type_a,  self.damage)
+        return "name:% s type_a:% s damage:% s" % (self.name, self.type_a, self.damage)
 
     def __str__(self):
         return "Attack info: name %s type attack %s damage %s" % (self.name, self.type_a, self.damage)
 
+    def __eq__(self, other):
+        if not isinstance(other, Attack):
+            return NotImplemented
+        return self.name == other.name
