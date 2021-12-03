@@ -4,6 +4,7 @@ class Pokemon:
     exp_rate = 1
     win = 0
     lose = 0
+    PLUS = 1.5
 
     def __init__(self, name, type_p, hp):
         if type_p not in self.types:
@@ -40,9 +41,19 @@ class Pokemon:
         return attack
 
     def receive_damage(self, attack):
-        remaing_hp = float(self.hp) - float(attack.damage)
-        self.hp = remaing_hp if float(remaing_hp) > 0 else 0
-        return self.hp
+
+        damage = float(attack.damage)
+        if attack.type_a == "fire" and self.type_p == "grass":
+            damage *= Pokemon.PLUS
+        if attack.type_a == "grass" and self.type_p == " water":
+            damage *= Pokemon.PLUS
+        if attack.type_a == "water" and self.type_p == "fire":
+            damage *= Pokemon.PLUS
+        remains_hp = float(self.hp) - damage
+
+        self.hp = remains_hp if float(damage) > 0 else 0
+
+        return damage
 
     def __repr__(self):
         return "name:% s type_p:% s hp:% s win:%s lose:%s attacks:% s " % (
