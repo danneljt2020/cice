@@ -23,7 +23,7 @@ class Stadistics:
         for j in self.x:
             d_pow = pow((j - x_media), 2)
             s1 = s1 + d_pow
-        return s1/self.n
+        return s1 / self.n
 
     @property
     def variance_y(self):
@@ -34,9 +34,17 @@ class Stadistics:
             s1 = s1 + d_pow
         return s1 / self.n
 
+    @property
+    def co_variance(self):
+        sum_xy = 0
+        for i in range(0, self.n):
+            sum_xy += self.x[i] * self.y[i]
+        print(self.avg_x * self.avg_y)
+        return (sum_xy / self.n) - self.avg_x * self.avg_y
+
     def __str__(self):
         return f"X {self.x}\nY: {self.y}\nN: {self.n}"
 
 
-data_2 = Stadistics([2, 1, 3], [3, 5, 7])
-print(data_2.variance_x)
+data_2 = Stadistics([1, 2, 3], [10, 20, 27])
+print(data_2.co_variance)
