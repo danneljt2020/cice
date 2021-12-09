@@ -1,3 +1,6 @@
+import math
+
+
 class Stadistics:
 
     def __init__(self, x, y):
@@ -34,17 +37,32 @@ class Stadistics:
             s1 = s1 + d_pow
         return s1 / self.n
 
-    @property
-    def co_variance(self):
+    def sumxy(self):
         sum_xy = 0
         for i in range(0, self.n):
             sum_xy += self.x[i] * self.y[i]
-        print(self.avg_x * self.avg_y)
-        return (sum_xy / self.n) - self.avg_x * self.avg_y
+        return sum_xy
+
+    @property
+    def co_variance(self):
+        return (self.sumxy() / self.n) - self.avg_x * self.avg_y
+
+    @property
+    def r(self):
+        den = self.co_variance
+        num = math.sqrt(self.variance_x) * math.sqrt(self.variance_y)
+        return den / num
+
+    @property
+    # TODO
+    def B(self):
+        den = self.n * self.sumxy() - (sum(self.x) * sum(self.y))
+
+        return den
 
     def __str__(self):
         return f"X {self.x}\nY: {self.y}\nN: {self.n}"
 
 
 data_2 = Stadistics([1, 2, 3], [10, 20, 27])
-print(data_2.co_variance)
+print(data_2.B)
