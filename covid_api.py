@@ -1,7 +1,7 @@
 import requests as req
 import json
 from datetime import datetime
-import matplotlib.pyplot as plt
+
 
 base_url = 'https://datos.comunidad.madrid/catalogo/dataset/b3d55e40-8263-4c0b-827d-2bb23b5e7bab/resource/907a2df0-2334-4ca7-aed6-0fa199c893ad/download/covid19_tia_zonas_basicas_salud_s.json'
 data = req.get(base_url).json()
@@ -42,15 +42,3 @@ def get_data_by_date():
             result[date_zone] = [dat]
     return result
 
-
-x = [num for num in range(1, len(get_data_by_date())+1)]
-y = []
-
-for zone in get_data_by_date().values():
-    y.append(sum(z['casos_confirmados_totales'] for z in zone))
-
-y.reverse()
-
-
-plt.plot(x, y)
-plt.show()

@@ -59,6 +59,7 @@ class Stadistics:
     def co_variance(self):
         return (self.sum_xy() / self.n) - self.avg_x * self.avg_y
 
+    # pearson
     @property
     def r(self):
         den = self.co_variance
