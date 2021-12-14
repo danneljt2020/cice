@@ -1,5 +1,5 @@
 import math
-
+from datetime import datetime,timedelta
 
 class Stadistics:
 
@@ -78,6 +78,8 @@ class Stadistics:
 
     def prediction_y(self, x_value):
         return self.B * x_value + self.B_0
+
+
 
     def __str__(self):
         return f"X {self.x}\nY: {self.y}\nN: {self.n}"

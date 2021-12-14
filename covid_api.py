@@ -18,6 +18,8 @@ def write_data(json_file, data_json):
     with open(json_file, mode="w", encoding="utf8") as file:
         json.dump(data_json, file, ensure_ascii=False, indent=4)
 
+# write_data("covid.json",data) update
+
 
 # get all confirmed by month TODO add by month and day
 def get_confirmed_by_month(month):
@@ -31,6 +33,11 @@ def get_confirmed_by_month(month):
     return all_cases
 
 
+def get_all_data():
+    return get_data("covid.json")['data']
+
+
+# data array by date dict
 def get_data_by_date():
     data_list = get_data("covid.json")['data']
     result = {}
