@@ -1,6 +1,7 @@
 from stadistics import Stadistics
 from covid_api import *
 from datetime import datetime, timedelta
+import math
 import matplotlib.pyplot as plt
 
 
@@ -21,7 +22,7 @@ def prediction_cases(std_object, last_date, future_date):
     return std_object.prediction_y(y_days)
 
 
-x = [num for num in range(1, len(get_data_by_date()) + 1)]
+# x = [num for num in range(1, len(get_data_by_date()) + 1)]
 
 
 # basic casos_confirmados_totales
@@ -46,15 +47,26 @@ def tasa_incidencia_acumulada_Y(date_analize):
     return y
 
 
+def ec_student(std_1, std_2):
+    num = std_1.avg_y - std_2.avg_y
+    den_part_1 = (std_1.n - 1) * std_1.quasi_variance_y + (std_2.n - 1) * std_2.quasi_variance_y
+    den_part_2 = std_1.n + std_2.n - 2
+    den_fin = den_part_1 / den_part_2
+    den_squart = den_fin * (1 / std_1.n + 1 / std_2.n)
+    return num / math.sqrt(den_squart)
+
+
 y_now_dic = tasa_incidencia_acumulada_Y("2021/12/14")
 y_past_dic = tasa_incidencia_acumulada_Y("2020/12/15")
 
-analice_now_dic = Stadistics(x, y_now_dic)
-analice_past_dic = Stadistics(x, y_past_dic)
+x_new = [num for num in range(0, len(y_past_dic))]
+
+analice_now_dic = Stadistics(x_new, y_now_dic)
+analice_past_dic = Stadistics(x_new, y_past_dic)
+
 
 # ESTA OK
-print(analice_past_dic.avg_y)
-
+print(ec_student(analice_now_dic, analice_past_dic))
 
 # TODO Analisis y grafica de casos_confirmados_totales
 # analize_1_obj = Stadistics(x, pretiction_casos_confirmados_totales_Y())

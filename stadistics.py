@@ -1,5 +1,6 @@
 import math
-from datetime import datetime,timedelta
+from datetime import datetime, timedelta
+
 
 class Stadistics:
 
@@ -36,6 +37,15 @@ class Stadistics:
             d_pow = pow((j - y_media), 2)
             s1 = s1 + d_pow
         return s1 / self.n
+
+    @property
+    def quasi_variance_y(self):
+        y_media = self.avg_y
+        s1 = 0
+        for j in self.y:
+            d_pow = pow((j - y_media), 2)
+            s1 = s1 + d_pow
+        return s1 / (self.n - 1)
 
     def sum_xy(self):
         sum_xy = 0
@@ -83,6 +93,3 @@ class Stadistics:
 
     def __str__(self):
         return f"X {self.x}\nY: {self.y}\nN: {self.n}"
-
-
-
