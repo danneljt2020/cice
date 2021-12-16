@@ -1,78 +1,53 @@
-from stadistics import Stadistics
-from covid_api import *
-from datetime import datetime, timedelta
-import math
-import matplotlib.pyplot as plt
+from time import perf_counter
+import datetime as dt
+import random
 
 
-# get Y value from data json
-def get_y2(analize_obj):
-    result = []
-    # print(len(data['2020/12/09']))
-    for val in analize_obj.x:
-        result.append(analize_obj.prediction_y(val))
-    return result
+def hello_decorator(func):
+    def inner1(*args, **kwargs):
+        # print("Parameters", args)
+        returned_value = func(*args, **kwargs)
+        return returned_value + "!"
+
+    return inner1
 
 
-# Prediction function!
-def prediction_cases(std_object, last_date, future_date):
-    date_fut = datetime.strptime(future_date, '%Y/%m/%d')
-    delta = date_fut - last_date  # diff between dates
-    y_days = len(std_object.x) + delta.days / 7
-    return std_object.prediction_y(y_days)
+# adding decorator to the function
+@hello_decorator
+def f_hello(name):
+    return name
 
 
-# x = [num for num in range(1, len(get_data_by_date()) + 1)]
+# print(f_hello("dannel"))
 
 
-# basic casos_confirmados_totales
-def pretiction_casos_confirmados_totales_Y():
-    y = []
-    for zone in get_data_by_date().values():
-        y.append(sum(z['casos_confirmados_totales'] for z in zone))
-    y.reverse()
-    return y
+# Crear un decorador log que imprima por pantalla el nombre de la
+# función que se haya ejecutado y también la hora de su ejecución
+
+def timer_count(func):
+    """Print the runtime the decorated function"""
+
+    def wrapper_timer(*args, **kwargs):
+        start_time = perf_counter()
+        value = func(*args, **kwargs)
+        end_time = perf_counter()
+        run_time = end_time - start_time
+        print("La funcion se ha ejecutado", dt.datetime.now().date())
+        print(f"Finalizo {func.__name__!r} en {run_time:.5f} segundos")
+        return value
+
+    return wrapper_timer
 
 
-# get tasa_incidencia_acumulada_activos_ultimos_14dias by date
-def tasa_incidencia_acumulada_Y(date_analize):
-    y = []
-    for zone in get_data_by_date().values():
-        inform_date = datetime.strptime(zone[0]['fecha_informe'], '%Y/%m/%d %H:%M:%S')
-
-        if inform_date.strftime('%Y/%m/%d') == date_analize:
-            y = ([z['tasa_incidencia_acumulada_ultimos_14dias'] for z in zone])
-
-    y.reverse()
-    return y
+@timer_count
+def sum_all_f_complex(num_times):
+    sum_all = 0
+    for n in range(0, num_times):
+        r1 = random.randint(0, num_times)
+        sum_all += n - r1
+        for xn in range(0, n):
+            sum_all += xn
+    return sum_all
 
 
-def ec_student(std_1, std_2):
-    num = std_1.avg_y - std_2.avg_y
-    den_part_1 = (std_1.n - 1) * std_1.quasi_variance_y + (std_2.n - 1) * std_2.quasi_variance_y
-    den_part_2 = std_1.n + std_2.n - 2
-    den_fin = den_part_1 / den_part_2
-    den_squart = den_fin * (1 / std_1.n + 1 / std_2.n)
-    return num / math.sqrt(den_squart)
-
-
-y_now_dic = tasa_incidencia_acumulada_Y("2021/12/14")
-y_past_dic = tasa_incidencia_acumulada_Y("2020/12/15")
-
-x_new = [num for num in range(0, len(y_past_dic))]
-
-analice_now_dic = Stadistics(x_new, y_now_dic)
-analice_past_dic = Stadistics(x_new, y_past_dic)
-
-
-# ESTA OK
-print(ec_student(analice_now_dic, analice_past_dic))
-
-# TODO Analisis y grafica de casos_confirmados_totales
-# analize_1_obj = Stadistics(x, pretiction_casos_confirmados_totales_Y())
-# plt.plot(x, pretiction_casos_confirmados_totales_Y(), label="Casos Totales", color="r")
-# plt.plot(x, get_y2(analize_1_obj), label="Prediccion", linestyle='dashed')
-# plt.xlabel("Semanas")
-# plt.ylabel("Casos Acumulados")
-# plt.legend()
-# plt.show()
+print(sum_all_f_complex(1000))
