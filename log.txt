@@ -1,0 +1,9 @@
+ Funcion sum_all_f_complex Ejecutada el 2021-12-16 tiempo de ejecucion 0.024695473002793733
+ Funcion sum_all_f_complex Ejecutada el 2021-12-16 tiempo de ejecucion 0.025871518002531957
+ Funcion sum_all_f_complex Ejecutada el 2021-12-16 tiempo de ejecucion 0.021361885002988856
+ Funcion sum_all_f_complex Ejecutada el 2021-12-16 tiempo de ejecucion 0.02120775399816921
+ Funcion sum_all_f_complex Ejecutada el 2021-12-16 tiempo de ejecucion 0.02134081099939067
+ Funcion sum_all_f_complex Ejecutada el |2021-12-16 tiempo de ejecucion 0.01813670500268927
+ Funcion sum_all_f_complex Ejecutada el |2021-12-16 tiempo de ejecucion 0.020183421998808626
+ Funcion sum_all_f_complex Ejecutada el |2021-12-16 tiempo de ejecucion 0.01747756500117248
+ Funcion sum_all_f_complex Ejecutada el |2021-12-16 tiempo de ejecucion 0.018210621004982386
