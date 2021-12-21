@@ -1,10 +1,9 @@
 {
-    "users": [
-        {
-            "pk": 1,
-            "username": "dannel",
-            "name": "dannel",
-            "pass": "dannel"
-        }
-    ]
+   "data": [
+      {
+         "username": "dannel",
+         "pwd": "688787d8ff144c502c7f5cffaafe2cc588d86079f9de88304c26b0cb99ce91c6",
+         "token": "80d0626b5457d2e5409da88cc543dca5cbd1cbffc81333e34f1093b011c5c6a6"
+      }
+   ]
 }

@@ -1,9 +1,8 @@
 import json
 from user import User
 import stdiomask
-from cryptography.fernet import Fernet
+from hashlib import sha3_256
 
-key = Fernet.generate_key()
 
 # read the json file
 def get_data_users():
@@ -27,10 +26,8 @@ def verify_exit(new_username):
 
 
 def add_user(user_obj):
-    # fernet = Fernet(key)
     flag = True
     users = get_data_users()
-    # encript_pass = fernet.encrypt(user_obj.passw.encode())
     new_user = {
       "pk": len(users["users"]) + 1,
       "username": user_obj.username,
@@ -44,12 +41,10 @@ def add_user(user_obj):
 
 
 def login(username, passw):
-    # fernet = Fernet(key)
     users = get_data_users()["users"]
     flag = False
     for user in users:
         if user["username"].lower() == username.lower():
-            # passw_ver = fernet.decrypt(bytes(user["pass"], encoding='utf8')).decode()
             if user["pass"] == passw:
                 flag = True
     return flag
@@ -106,20 +101,11 @@ def main():
     # if log:
     menu()
 
-main()
-#
-# message = "hello geeks"
-#
-# fernet1 = Fernet(key)
-# fernet2 = Fernet(key)
-#
-#
-# encMessage = fernet1.encrypt(message.encode())
-#
-# print("original string: ", message)
-# print("encrypted string: ", encMessage)
-#
-#
-# decMessage = fernet2.decrypt(encMessage).decode()
-#
-# print("decrypted string: ", decMessage)
+# main()
+
+pwd = "123"
+pwd_byte = sha3_256(pwd.encode())
+print("byt", pwd_byte)
+print("byt", pwd_byte.hexdigest())
+
+
