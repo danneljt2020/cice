@@ -1,6 +1,7 @@
 import json
 from hashlib import sha256
 from random import random
+from functools import wraps
 
 
 class User:
@@ -15,6 +16,32 @@ class User:
             "username": self.username,
             "pwd": self.pwd
         }
+
+
+class Admin(User):
+    def __init__(self, username, pwd):
+        super().__init__(username, pwd)
+
+    @property
+    def users(self):
+        with open("user.json", encoding="utf8") as file:
+            return json.load(file)
+
+    def change_name(self, username, new_username):
+        auth = Auth("./user.json")
+        result = auth.get_user_by_username(username)
+
+        if result.get('index'):
+            user_obj = result["user_obj"]
+            index = result["index"]
+            user_obj["username"] = new_username
+
+            users = self.users
+            users["data"][index] = user_obj
+
+            dat = open("user.json", "w", encoding="utf8")
+            json.dump(users, dat, indent=3, ensure_ascii=False)
+            dat.close()
 
 
 SECRET = b"cice"
@@ -49,6 +76,20 @@ class Auth:
                 result["user_obj"] = user
                 result["index"] = i
         return result
+
+    # def autenticate(self, func):
+    #     @wraps(func)
+    #     def verify_token(*args, **kwargs):
+    #         cookies = self.cookies["tokens"]
+    #         users = self.users["data"]
+    #         flag = False
+    #         if cookies.get('token'):
+    #             for user in users:
+    #                 if user["token"] == cookies["token"]:
+    #                     flag = True
+    #         return flag
+    #
+    #     return verify_token
 
     def verify_token(self):
         cookies = self.cookies["tokens"]

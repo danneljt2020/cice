@@ -1,6 +1,6 @@
 import json
 import stdiomask
-from user import User, Auth
+from user import User, Auth, Admin
 
 
 '''
@@ -28,7 +28,8 @@ while user != "q":
 
     if auth.verify_token():
         print("3. Dashboard")
-        print("4. Logout")
+        print("4. Change Name")
+        print("5. Logout")
 
     user = input("Seleccione: ")
     if user == "1":
@@ -50,6 +51,21 @@ while user != "q":
         print("Menu Autorizado")
 
     elif user == "4":
+        print("Menu Autorizado")
+        print("Seleccione el usuario a modificar")
+        users = auth.users['data']
+        for i, user in enumerate(users):
+            print(str(i+1) + " --> " + user["username"])
+
+        user_name = input("Usuario: ")
+        new_user_name = input("Nuevo Usuario: ")
+        cookies = auth.cookies["tokens"]
+
+        if cookies.get('token'):
+            admin_instance = Admin(cookies['username'], cookies['token'])
+            admin_instance.change_name(user_name, new_user_name)
+
+    elif user == "5":
         empty = {"tokens": {}}
         json_cookies = open('cookies.json', "w", encoding="utf8")
         json.dump(empty, json_cookies, indent=3, ensure_ascii=False)
