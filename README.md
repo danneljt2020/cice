@@ -1,18 +1,26 @@
-### Decorators
+## Aplicación de vuelos para la aerolina A.A.
 
-1. Agregar a una función que retorne "hola" signos de exclamación
-2. Actualizar la función del punto 1 para que pueda saludar a un nombre
-3. Crear un decorador log que imprima por pantalla el nombre de la función que se haya ejecutado y también la hora de su ejecución
+### La aplicación permitirá:
 
-### Creación y autenticación de usuarios
+1. Comprar modificar y cancelar vuelos
+2. Indicar tiempo estimado de vuelo y hora de llegada en los usos horarios de origen y destino
 
-* Aplicación de terminal que permita crear usuarios y loguearse
-* Las contraseñas deben estar encriptadas
-* Cada login debe ser registrado en los logs
+### Para realizar esta actividad necesitaremos:
 
-### Objeto User
+1. Módulo datetime
+2. Una clase vuelo (Flight)
+3. Un JSON para guardar los vuelos comprados
+4. Un decorador para guardar los vuelos en el JSON
 
-1. Loguear usuario
-2. Autenticar usuario
-© 2021 GitHub, Inc.
-Terms
+### Clase vuelo:
+
+* origin: Airport_instance
+* destination: Airport_instance
+* departures_hours: list (**horarios de partida**)
+* tiempo de vuelo: float
+* ETA: method -> float (**Estimated Time of Arrival**)
+
+### JSON
+
+* Tendrá un identificador único
+* Registrará las propiedades mencionadas en la clase Flight
