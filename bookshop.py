@@ -10,8 +10,15 @@ DB = json.load(file)
 genre = ["Narrativa extranjera", "Divulgación científica", "Narativa policíaca", "Ciencia ficción", "Autoayuda"]
 
 
+def pretty_book(books):
+    for book in books:
+        print("-".center(50, "-"))
+        for k,v in book.items():
+            print(f"{k}: {v}")
+
+
 # Verify if exist book , return the index book if exist
-def existBook(id_book):
+def exist_book(id_book):
     flag = -1
     for key, book in enumerate(DB):
         if book["id"].lower() == id_book.lower():
@@ -20,7 +27,7 @@ def existBook(id_book):
 
 
 # find books by key,value in the dictionary
-def findByKeyValue(key, value):
+def find_by_key_value(key, value):
     respond = []
     for book in DB:
         if book[key].lower() == value.lower():
@@ -29,9 +36,9 @@ def findByKeyValue(key, value):
 
 
 # delete book by ID
-def deleteBookById(id):
+def delete_book_by_id(id):
     msg = "El libro con ID :" + id + " no se encuentra en la Base de Datos!"
-    index_book = existBook(id)
+    index_book = exist_book(id)
     if index_book >= 0:
         DB.pop(index_book)
         msg = "El libro ha sido eliminado satisfactoriamente."
@@ -39,7 +46,7 @@ def deleteBookById(id):
 
 
 # update book by ID, key value
-def updateBook(id_book, book_title, book_author, book_gender):
+def update_book(id_book, book_title, book_author, book_gender):
     msg = "Fails"
     for key, book in enumerate(DB):
         if book["id"].lower() == id_book.lower():
@@ -49,10 +56,11 @@ def updateBook(id_book, book_title, book_author, book_gender):
             msg = "El libro ha sido modificado satisfactoriamente."
     return msg
 
+
 # add new book
-def addBook(id_book, book_title, book_author, book_gender):
+def add_book(id_book, book_title, book_author, book_gender):
     msg = "Existe un libro con el mismo ID."
-    if existBook(id_book) == -1:
+    if exist_book(id_book) == -1:
         new_book = {
             "id": id_book,
             "title": book_title,
@@ -63,20 +71,19 @@ def addBook(id_book, book_title, book_author, book_gender):
         msg = "El libro ha sido adicionado satisfactoriamente."
     return msg
 
+
 # Search Book
-def searchBook(selected_option):
+def search_book(selected_option):
+    respond = []
     if selected_option == "1":
-        id = input("ID: ")
-        respond = findByKeyValue("id", id)
-        print("Resultado de la Busqueda:", respond)
+        id_book = input("ID: ")
+        respond = find_by_key_value("id", id_book)
     if selected_option == "2":
         title = input("Titulo: ")
-        respond = findByKeyValue("title", title)
-        print("Resultado de la Busqueda:", respond)
+        respond = find_by_key_value("title", title)
     if selected_option == "3":
         autor = input("Autor: ")
-        respond = findByKeyValue("autor", autor)
-        print("Resultado de la Busqueda:", respond)
+        respond = find_by_key_value("autor", autor)
     if selected_option == "4":
         print("Seleccione el Genero:")
         # show the gender list to select
@@ -84,10 +91,17 @@ def searchBook(selected_option):
             print(key, value)
         gender_option = int(input("genero: "))
         if gender_option >= 0 and gender_option <= len(genre) - 1:
-            respond = findByKeyValue("genre", genre[gender_option])
-            print("Resultado de la Busqueda:", respond)
+            respond = find_by_key_value("genre", genre[gender_option])
         else:
             print("Ha seleccionado una opcion no valida! Pongase los ESPEJUELOS!")
+
+    if len(respond) > 0:
+        print("-".center(50, "-"))
+        print("Resultado de la Busqueda:")
+        pretty_book(respond)
+    else:
+        print("No se han encontrado resultados para el parametro introducido")
+
 
 
 
