@@ -1,16 +1,14 @@
-# import requests as req
 from municipios import *
 
 import csv
 
-# url = 'https://datos.comunidad.madrid/catalogo/dataset/032474a0-bf11-4465-bb92-392052962866/resource/ee750429-1e05-411a-b026-a57ea452a34a/download/municipio_comunidad_madrid.csv'
-# download = req.get(url)
-# decode_content = download.content.decode('utf-8', errors='ignore')
-# cr = csv.reader(decode_content.splitlines(), delimiter=';')
-# municipios = list(cr)
 
-# for row in municipios:
-#     print(row)
+def pretty_print(municipio):
+    print("Nombre municipio:", municipio[1])
+    print("Código INE:", municipio[2])
+    print("Superficie:", municipio[5] + " km2")
+    print("Densidad:", municipio[6] + " km2")
+    print("")
 
 
 with open("municipios.csv", mode="r", encoding="utf8") as file:
@@ -27,8 +25,7 @@ with open("municipios.csv", mode="r", encoding="utf8") as file:
         print("4. Obtener densidad total")
         print("5. Obtener la población de Madrid")
         print("6. Obtener la población media de los municipios")
-        print("7. Todos")
-        print("8. LEY BENDFORD")
+        print("7. LEY BENDFORD")
         print("Presione la letra Q para salir")
         option_menu = input(":")
 
@@ -36,12 +33,12 @@ with open("municipios.csv", mode="r", encoding="utf8") as file:
             if option_menu == "1":
                 print("Introduzca el INE".center(50, "-"))
                 ine = input("ID:")
-                print(getMunicipioByCodeINE(data, ine))
+                pretty_print(getMunicipioByCodeINE(data, ine))
 
             elif option_menu == "2":
                 print("El municipio mas grande es:")
                 print("")
-                print(getMunicipioBig(data))
+                pretty_print(getMunicipioBig(data))
 
             elif option_menu == "3":
                 print("La superficie total de los Municipios es:")
@@ -64,11 +61,6 @@ with open("municipios.csv", mode="r", encoding="utf8") as file:
                 print(getPoblacionMedia(data), 'personas')
 
             elif option_menu == "7":
-                print("La poblacion media de Madrid es:")
-                print("")
-                print(getPoblacionMedia(data), 'personas')
-
-            elif option_menu == "8":
                 print("LEY:")
                 print("")
                 density = [mun[-1] for mun in data]

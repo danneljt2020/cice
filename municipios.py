@@ -59,8 +59,6 @@ def verifyLeyBendford(data):
     first_digit_freq = collections.Counter(first_all_digits)  # count key value
     # print(first_digit_freq)
 
-    # TODO complete
-
     for n in range(1, 10):
         frequency = first_digit_freq[str(n)]
         frequency_percent = frequency / len(data)  # percent

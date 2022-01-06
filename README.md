@@ -1,20 +1,10 @@
 # Master Python CICE
+### Municipios de la comunidad de Madrid
 
-### Aplicación del clima
-
-1. Crear una aplicación de terminal con la ayuda de la API: https://www.metaweather.com/
-2. La aplicación tendrá el siguiente menú:
-* Buscar por ciudad
-* Buscar por coordenadas (latitud y longitud)
-* Buscar por ciudad/coordenadas en una determinada fecha
-
-#### Y debera entregar lo siguiente de cada búsqueda:
-
-* La descripción del clima (soleado, nuboso y lluvioso)
-* La máxima
-* La mínima
-* Sensación térmica
-* Humedad
-* Velocidad del viento y dirección
-
-#### Al presionar Enter se le mostrará al usuario el pronóstico para el siguiente día máximo 3 días
+1. Obtener municipio por código INE
+2. Obtener el municipio más grande
+3. Obtener superficie total
+4. Obtener densidad total
+5. Obtener la población de Madrid
+6. Obtener la población media de los municipios
+7. Comprobar la ley de Benford
