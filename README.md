@@ -1,5 +1,4 @@
 # Master Python CICE
-
 ### Aplicación del clima
 
 1. Crear una aplicación de terminal con la ayuda de la API: https://www.metaweather.com/
@@ -17,4 +16,11 @@
 * Humedad
 * Velocidad del viento y dirección
 
-#### Al presionar Enter se le mostrará al usuario el pronóstico para el siguiente día máximo 3 días
+3. Agregar al menú inicial la opción:
+* Planea tu viajes
+
+La misma permitirá elegir un origen y un destino e indicará, en base al clima lo siguiente:
+* Aviso de mal clima (sn, sl, h, t hr)
+* Distancia a recorrer (km.)
+* Duración del trayecto (100 km/h)
+* Si la velocidad del viento supera los 10 nudos, reducir la velocidad media a 90 km/h

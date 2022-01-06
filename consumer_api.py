@@ -1,18 +1,9 @@
 import requests as req
 import json
-import time
 
-# know the execution time
-start = time.perf_counter()
-finish = time.perf_counter()
-# print(finish - start)
 
 base_url = 'https://www.metaweather.com/api/location/'
 
-
-# try:
-# except requests.exceptions.RequestException as e:
-#     raise SystemExit(e)
 
 # read the json file
 def get_data(json_file):
@@ -40,6 +31,7 @@ def find_weather_by_city(city, **kwargs):
             raise SystemExit(e)
         list_woeid = get_woeid(data)
         woeids[city] = list_woeid
+
         # validate if find woeid to write in json file
         if len(list_woeid) > 0:
             write_data("woeids.json", woeids)
@@ -109,7 +101,7 @@ def save_woeid_from_search_lattlong(data):
     write_data("woeids.json", woeids)
 
 
-# get the cities distance return a number in meters
+# get the cities distance return a number in km
 def distance_between_city(city_origin, city_destiny):
     woeids = get_data("woeids.json")
     city_base_url = base_url + "search/?query="
@@ -119,7 +111,7 @@ def distance_between_city(city_origin, city_destiny):
         data = response.json()
     except req.exceptions.RequestException as e:
         raise SystemExit(e)
-    origin_location_coords = get_coords_woeid(data)["latt_long"]#todo verificar
+    origin_location_coords = get_coords_woeid(data)["latt_long"]
 
     # validate if find woeid to write in json file
     if not woeids.get(city_origin.lower()):
@@ -130,9 +122,10 @@ def distance_between_city(city_origin, city_destiny):
 
     distance = get_distance_from_origin(city_destiny, origin_location_coords)
 
-    return distance
+    return distance/1000
 
 
+# get t distance from origin coords
 def get_distance_from_origin(city_destiny, location_coords):
     lat_lon_url = 'search/?lattlong=' + location_coords
     try:
@@ -147,18 +140,36 @@ def get_distance_from_origin(city_destiny, location_coords):
     return distance
 
 
-# get coords from data city
+# aux get coords from data city
 def get_coords_woeid(data):
     location_woeid = {"latt_long": data[0]['latt_long'], "woied": data[0]['woeid']}
     return location_woeid
 
 
-# estimate time depends to weather TODO
-def estimate_time(distance, destiny_woeid):
-    weather = get_weather([destiny_woeid])
-    estimate = 25
+# estimate time depends to weather TODO pasale le woeid del origen y destino y distancia y listo
+def estimate_data_trip(distance, destiny_woeid):
+    weather = get_weather([destiny_woeid])[0]['consolidated_weather'][0]
+    weather_state = weather['weather_state_abbr']
+    wind_speed = weather['wind_speed']
+    duration_trip = distance/100
 
-    return estimate
+    is_bad_weather = False
+    if weather_state in ["sn", "sl", "h", "t", "hr"]:
+        is_bad_weather = True
+
+    if wind_speed > 10:
+        duration_trip = distance / 90
+
+    result = {
+        "distance": str(distance) + "km",
+        "is_bad_weather": "Mal Tiempo" if is_bad_weather else "Buen Tiempo",
+        "duration": str(duration_trip) + " hrs",
+    }
+
+    print(result)
+
+    return wind_speed
 
 
-print(distance_between_city("madrid", "lisbon"))
+
+estimate_data_trip(550,753692)
