@@ -1,5 +1,13 @@
 {
-   "vuelos": [
-      {}
-   ]
+    "flights": [
+        {
+            "id": "G20105",
+            "origin": "SPA",
+            "destination": "ARG",
+            "departure_hour": "8:00",
+            "time_flight": 13,
+            "estimate_arrival": "01/07/2022, 23:00:11 PM",
+            "time_buy": "21:26:11 pm"
+        }
+    ]
 }

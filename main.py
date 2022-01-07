@@ -1,6 +1,8 @@
 import datetime as dt
 import json
 from flight import Flight
+import random
+import string
 
 DB_aereolina = "./aereolina.json"
 DB_flight = "./flight.json"
@@ -11,8 +13,8 @@ def get_json_data(json_file):
         return json.load(file)
 
 
-def save_flight(data, json_file):
-    with open(json_file, "w", encoding="utf8") as file:
+def save_flight(data):
+    with open(DB_flight, "w", encoding="utf8") as file:
         json.dump(data, file, ensure_ascii=False, indent=4)
 
 
@@ -32,6 +34,7 @@ def get_all_origin():
     return destiny
 
 
+utc_aux = {'ARG': -3, 'PER': -5, 'SPA': 1, 'BRA': -3}
 user = ""
 while user != "q":
     print("1. Comprar Vuelo")
@@ -45,7 +48,7 @@ while user != "q":
             print(str(i + 1) + " --> " + o)
 
         origin_opt = input("Seleccione: ")
-        origin_selected = get_all_origin()[int(origin_opt)-1]
+        origin_selected = get_all_origin()[int(origin_opt) - 1]
 
         print("Paises disponibles desde el origen " + origin_selected)
 
@@ -57,7 +60,7 @@ while user != "q":
             print(str(i + 1) + " --> " + d[0])
         destiny_opt = input("Seleccione: ")
 
-        flights_d = destinys[int(destiny_opt)-1]
+        flights_d = destinys[int(destiny_opt) - 1]
         departures = flights_d[1].get('departures')
         destitation = flights_d[0]
         flight_time = flights_d[1].get('flight_time')
@@ -67,14 +70,37 @@ while user != "q":
             print(str(h + 1) + " --> " + horary)
 
         horary_opt = input("Seleccione: ")
-        print(origin_selected)
 
-        flight_obj = Flight(destitation, origin_selected, departures[int(horary_opt)-1], flight_time, utc)
+        flight_obj = Flight(destitation, origin_selected, departures[int(horary_opt) - 1], flight_time, utc)
+        utc_origin = utc_aux.get(origin_selected)
 
-        print(flight_obj.estimate_flight(-2))
+        string.ascii_letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        letter = random.choice(string.ascii_letters)
+
+        id_f = letter + str(random.randint(1, 50000))
+
+        now = dt.datetime.now()
+        current_time = now.strftime("%H:%M:%S %P")
+
+        info_flight = {
+            "id": id_f,
+            "origin": flight_obj.origin,
+            "destination": flight_obj.destination,
+            "departure_hour": flight_obj.departure_hour,
+            "time_flight": flight_obj.time_flight,
+            "estimate_arrival": flight_obj.estimate_flight(utc_origin),
+            "time_buy": current_time
+        }
+
+        flights = get_json_data("flight.json")
+        flights['flights'].append(info_flight)
+
+        save_flight(flights)
+
+        print("Su reserva se ha registrado satisfactoriamente con identificador:", id_f)
 
     elif user == "2":
-        print("Seleccione el vuelo a modificar")
+        print("Seleccione el identificador del boleto a modificar")
 
     elif user == "3":
         pass
