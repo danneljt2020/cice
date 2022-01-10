@@ -34,6 +34,16 @@ def get_all_origin():
     return destiny
 
 
+def get_flight_by_id(id_flight):
+    flights = get_json_data("flight.json")
+    response = {'index': -1, 'flight': {}}
+    for k, flight in enumerate(flights['flights']):
+        if flight['id'] == id_flight:
+            response['index'] = k
+            response['flight'] = flight
+    return response
+
+
 utc_aux = {'ARG': -3, 'PER': -5, 'SPA': 1, 'BRA': -3}
 user = ""
 while user != "q":
@@ -77,7 +87,7 @@ while user != "q":
         string.ascii_letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
         letter = random.choice(string.ascii_letters)
 
-        id_f = letter + str(random.randint(1, 50000))
+        id_f = letter + str(random.randint(1111111, 9999999))
 
         now = dt.datetime.now()
         current_time = now.strftime("%H:%M:%S %P")
@@ -100,7 +110,13 @@ while user != "q":
         print("Su reserva se ha registrado satisfactoriamente con identificador:", id_f)
 
     elif user == "2":
-        print("Seleccione el identificador del boleto a modificar")
+        print("Introduzca el identificador del boleto a modificar")
+        opt_boleto = input("ID Boleto: ")
+        flight_upt = get_flight_by_id(opt_boleto)
+        if flight_upt['index'] == -1:
+            print("No se ha encontrado una reserva co el ID:", opt_boleto)
+        else:
+            pass
 
     elif user == "3":
         pass

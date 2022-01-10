@@ -8,6 +8,15 @@
             "time_flight": 13,
             "estimate_arrival": "01/07/2022, 23:00:11 PM",
             "time_buy": "21:26:11 pm"
+        },
+        {
+            "id": "U36934",
+            "origin": "PER",
+            "destination": "SPA",
+            "departure_hour": "8:30",
+            "time_flight": 14.5,
+            "estimate_arrival": "01/07/2022, 13:00:15 PM",
+            "time_buy": "21:44:15 pm"
         }
     ]
 }

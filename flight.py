@@ -23,6 +23,9 @@ class Flight:
 
         return estimate_time.strftime("%m/%d/%Y, %H:%M:%S %p")
 
+
+
+
     @property
     def flight_dict(self):
         return {
