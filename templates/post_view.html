@@ -1,7 +1,6 @@
 {% extends "base.html" %}
-
-{% block title %}{{ slug_title }}{% endblock %}
-
+{% block title %}{{ post.title }}{% endblock %}
 {% block content %}
-    Mostrando el post {{ slug_title }}
+    <h1>{{ post.title }}</h1>
+    {{ post.content }}
 {% endblock %}
