@@ -1,5 +1,6 @@
 from consumer_api import *
 from datetime import date
+import datetime
 
 today = date.today()
 
@@ -28,6 +29,20 @@ while user.lower() != "q":
     print("4. Planificar Viaje")
     print("Presione la letra Q para salir")
     option_menu = input(":")
+
+    if option_menu == "":
+        tomorrow = today + datetime.timedelta(days=1)
+        tomorrow_2 = tomorrow + datetime.timedelta(days=1)
+
+        print("Pronostico para los proximos 3 dias")
+        latt = "40.420300"
+        long = "-3.705770"
+        f1 = find_weather_by_coodenadas(latt, long, date_user=today.strftime("%Y/%m/%d"))[0].pop()
+        f2 = find_weather_by_coodenadas(latt, long, date_user=tomorrow.strftime("%Y/%m/%d"))[0].pop()
+        f3 = find_weather_by_coodenadas(latt, long, date_user=tomorrow_2.strftime("%Y/%m/%d"))[0].pop()
+        print_weather(f1)
+        print_weather(f2)
+        print_weather(f3)
 
     if option_menu in menu:
         if option_menu == "1":
@@ -68,6 +83,13 @@ while user.lower() != "q":
                 latt_d = input("latitud:")
                 long_d = input("longitud:")
                 city_weathers = find_weather_by_coodenadas(latt_d, long_d, date_user=date_user)
+
+                if len(city_weathers) > 0:
+                    cities_coords_o = city_weathers[0].pop()
+                    if cities_coords_o:
+                        print_weather(cities_coords_o)
+                else:
+                    print("No se ha encontrado localizacion valida para las coordenadas introducidas")
 
             elif opt_menu == "2":
                 print("Introduzca la ciudad".center(50, "-"))
