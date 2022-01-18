@@ -35,7 +35,7 @@ while user.lower() != "q":
         tomorrow = today + datetime.timedelta(days=1)
         tomorrow_2 = tomorrow + datetime.timedelta(days=1)
 
-        print("Pronostico para los proximos 3 dias")
+        print("Pronostico para los proximos 3 dias en Madrid")
         latt = "40.420300"
         long = "-3.705770"
         f1 = find_weather_by_coodenadas(latt, long, date_user=today.strftime("%Y/%m/%d"))[0].pop()
