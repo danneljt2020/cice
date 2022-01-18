@@ -49,13 +49,12 @@ while user.lower() != "q":
             long = input("longitud:")
             city_weathers = find_weather_by_coodenadas(latt, long)
 
-            try:
+            if len(city_weathers)>0:
                 cities_coords = city_weathers[0]['consolidated_weather'].pop()
-            except IndexError:
-                cities_coords = None
-                print("Ups Algo ha salido mal")
-            if cities_coords:
-                print_weather(cities_coords)
+                if cities_coords:
+                    print_weather(cities_coords)
+            else:
+                print("No se ha encontrado localizacion valida para las coordenadas introducidas")
 
         if option_menu == "3":
             print("Introsuzca la fecha en formato 2021/11/22: ".center(50, "-"))
@@ -89,25 +88,20 @@ while user.lower() != "q":
             print("Introduzca las ciudades".center(50, "-"))
             city_origin = input("Ciudad Origen:")
             city_destiny = input("Ciudad Destino:")
-            print(distance_between_city(city_origin, city_destiny))
+            estimate_data_trip = estimate_trip(city_origin, city_destiny)
+
+            if len(estimate_data_trip) > 0:
+                print("Datos de su viaje")
+                print("Distancia:", estimate_data_trip.get('distance'))
+                print("Clima:", estimate_data_trip.get('is_bad_weather'))
+                print("Duracion:", estimate_data_trip.get('duration'))
+
+                input("")
+            else:
+                print("Una de las ciudades no existe")
 
         elif option_menu == "q":
             print("Hasta la Proxima!!!".center(40, "-"))
             break
     else:
         print("Ha seleccionado una Opcion no valida! USE ESPEJUELOS")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

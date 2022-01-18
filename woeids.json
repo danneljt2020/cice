@@ -1,7 +1,4 @@
 {
-    "madrid": [
-        766273
-    ],
     "san": [
         2487956
     ],
@@ -40,5 +37,38 @@
     ],
     "barcelona": [
         753692
+    ],
+    "madrid": [
+        766273
+    ],
+    "santa cruz": [
+        2488853
+    ],
+    "san jose": [
+        2488042
+    ],
+    "mountain view": [
+        2455920
+    ],
+    "oakland": [
+        2463583
+    ],
+    "san francisco": [
+        2487956
+    ],
+    "sacramento": [
+        2486340
+    ],
+    "fresno": [
+        2407517
+    ],
+    "lake tahoe": [
+        23511744
+    ],
+    "bakersfield": [
+        2358492
+    ],
+    "los angeles": [
+        2442047
     ]
 }
