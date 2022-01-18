@@ -6,10 +6,11 @@ today = date.today()
 
 
 def print_weather(city_weathers, **kwargs):
+    msg_str = "Clima para el dia "
     date_user = kwargs.get('date_user')
     if date_user:
-        date_str = date_user
-    print("Clima para el dia".center(50, "-"))
+        msg_str = msg_str + " " + date_user
+    print(msg_str.center(50, "-"))
     print("Estado:", city_weathers['weather_state_name'])
     print("Máxima:", city_weathers['max_temp'])
     print("Sensación térmica:", city_weathers['the_temp'])
@@ -40,9 +41,9 @@ while user.lower() != "q":
         f1 = find_weather_by_coodenadas(latt, long, date_user=today.strftime("%Y/%m/%d"))[0].pop()
         f2 = find_weather_by_coodenadas(latt, long, date_user=tomorrow.strftime("%Y/%m/%d"))[0].pop()
         f3 = find_weather_by_coodenadas(latt, long, date_user=tomorrow_2.strftime("%Y/%m/%d"))[0].pop()
-        print_weather(f1)
-        print_weather(f2)
-        print_weather(f3)
+        print_weather(f1, date_user=today.strftime("%Y/%m/%d"))
+        print_weather(f2, date_user=tomorrow.strftime("%Y/%m/%d"))
+        print_weather(f3, date_user=tomorrow_2.strftime("%Y/%m/%d"))
 
     if option_menu in menu:
         if option_menu == "1":
