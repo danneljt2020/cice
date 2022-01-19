@@ -5,6 +5,7 @@ from werkzeug.urls import url_parse
 
 from form import SignupForm, PostForm, LoginForm
 from models import *
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '7110c8ae51a4b5af97be6534caef90e4bb9bdcb3380af008f90b23a5d1616bf319bc298105da20fe'
@@ -14,9 +15,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 login_manager = LoginManager(app)
 login_manager.login_view = "login"
 db = SQLAlchemy(app)
+migrate = Migrate()
 
-if __name__ == "__main__":
-    app.run(debug=True, port=8001)
+migrate.init_app(app, db)
+
 
 app.config.update(
     FLASK_APP="Curso",
@@ -106,3 +108,7 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+if __name__ == "__main__":
+    app.run(debug=True, port=8001)
