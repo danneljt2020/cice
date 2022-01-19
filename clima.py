@@ -55,7 +55,7 @@ while user.lower() != "q":
                 cities = city_weathers[0]['consolidated_weather'].pop()
             except IndexError:
                 cities = None
-                print("Ups Algo ha salido mal")
+                print("No se ha encntrado la ciudad introducida")
             if cities:
                 print_weather(cities)
 
