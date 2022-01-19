@@ -1,11 +1,3 @@
-"""
-
-AUTOR: Juanjo
-
-FECHA DE CREACIÓN: 24/05/2019
-
-"""
-
 from flask import render_template, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user
 from werkzeug.urls import url_parse

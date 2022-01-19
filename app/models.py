@@ -1,11 +1,3 @@
-"""
-
-AUTOR: Juanjo
-
-FECHA DE CREACIÓN: 15/02/2019
-
-"""
-
 from flask import url_for
 from slugify import slugify
 from sqlalchemy.exc import IntegrityError
