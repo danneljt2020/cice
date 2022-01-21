@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -31,4 +31,17 @@ def create_app():
     from .public import public_bp
     app.register_blueprint(public_bp)
 
+    # Custom error handlers
+    register_error_handlers(app)
+
     return app
+
+
+def register_error_handlers(app):
+    @app.errorhandler(500)
+    def base_error_handler(e):
+        return render_template('error/500.html'), 500
+
+    @app.errorhandler(404)
+    def error_404_handler(e):
+        return render_template('error/404.html'), 404
