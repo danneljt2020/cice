@@ -45,3 +45,7 @@ def register_error_handlers(app):
     @app.errorhandler(404)
     def error_404_handler(e):
         return render_template('error/404.html'), 404
+
+    @app.errorhandler(401)
+    def error_401_handler(e):
+        return render_template('error/401.html'), 401

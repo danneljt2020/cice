@@ -22,11 +22,17 @@
             {{ form.content.label }}
             {{ form.content }}<br>
             {% for error in form.content.errors %}
-            <span style="color: red;">{{ error }}</span>
+                <span style="color: red;">{{ error }}</span>
             {% endfor %}
         </div>
         <div>
             {{ form.submit() }}
         </div>
     </form>
+
+    {% if post %}
+    <form action="{{ url_for('admin.delete_post', post_id=post.id) }}" method="post" novalidate>
+        <input type="submit" value="Eliminar" />
+    </form>
+    {% endif %}
 {% endblock %}

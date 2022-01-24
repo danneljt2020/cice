@@ -1,11 +1,13 @@
 from flask import render_template, redirect, url_for, request
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
 from app import login_manager
 from . import auth_bp
+from .decorators import admin_required
 from .forms import SignupForm, LoginForm
 from .models import User
+from ..admin import admin_bp
 
 
 @auth_bp.route("/signup/", methods=["GET", "POST"])
@@ -61,3 +63,11 @@ def logout():
 @login_manager.user_loader
 def load_user(user_id):
     return User.get_by_id(int(user_id))
+
+
+@admin_bp.route("/admin/users/")
+@login_required
+@admin_required
+def list_users():
+    users = User.get_all()
+    return render_template("admin/users.html", users=users)
