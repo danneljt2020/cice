@@ -1,4 +1,4 @@
-from flask import render_template, current_app, redirect, url_for
+from flask import render_template, current_app, redirect, url_for, request
 from flask_login import current_user
 from werkzeug.exceptions import NotFound, abort
 
@@ -10,8 +10,9 @@ from .form import CommentForm
 @public_bp.route("/")
 def index():
     # current_app.logger.info('Mostrando los posts del blog') #show log info in console
-    posts = Post.get_all()
-    return render_template("public/index.html", posts=posts)
+    page = int(request.args.get('page', 1))
+    post_pagination = Post.all_paginated(page, 4)
+    return render_template("public/index.html", post_pagination=post_pagination)
 
 
 @public_bp.route("/p/<string:slug>/", methods=['GET', 'POST'])
